@@ -11,7 +11,7 @@ let Watson = new WatsonHandler;
 
 $(document).ready( function() {
 	if (location.href !== "http://localhost:8888/") {
-		$('.logo').addClass('clickable');
+		$('.logo > h1').addClass('clickable');
 	}
 
 	$('.logo > h1').click(function() {
@@ -49,7 +49,7 @@ $(document).ready( function() {
 					$('.button-line').addClass('line-hide');
 					setTimeout(function() {
 						$('.button-line').hide();
-					}, 110);
+					}, 120);
 				}, 90);
 				setTimeout(function() {
 					$('#email').addClass('text-mode');
