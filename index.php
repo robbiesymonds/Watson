@@ -7,6 +7,8 @@
 		layout('search');
 	} elseif (route($i) == '/terms') {
 		layout('terms');
+	} elseif (route($i) == '/feed/gravatar') {
+		feed('gravatar');
 	} else {
 		layout('errors/404');
 	}

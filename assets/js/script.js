@@ -7,6 +7,7 @@ function isEmail(email) {
 // Variables
 $email = '';
 $kill = false;
+let Watson = new WatsonHandler;
 
 $(document).ready( function() {
 	if (location.href !== "http://localhost:8888/") {
@@ -48,13 +49,16 @@ $(document).ready( function() {
 					$('.button-line').addClass('line-hide');
 					setTimeout(function() {
 						$('.button-line').hide();
-					}, 100);
+					}, 110);
 				}, 90);
 				setTimeout(function() {
 					$('#email').addClass('text-mode');
 					$('#email').attr('readonly', 'true');
 				}, 500);
 				$('.corner-loader').fadeIn(200);
+				setTimeout(function() {
+					Watson.Start();
+				}, 700);
 			}
 		}
 	});
@@ -70,7 +74,7 @@ $(document).ready( function() {
 			$('.stop-warning-box').slideUp(100);
 		} else {
 			// Kill Current Processes
-			$kill = true;
+			Watson.Kill();
 			$('.stop-warning').fadeOut(100);
 			$('.stop-warning-box').slideUp(100);
 			$('.corner-loader').fadeOut(200);

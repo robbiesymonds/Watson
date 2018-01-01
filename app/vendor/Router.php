@@ -9,4 +9,9 @@
 		include($path);
 	}
 
+	function feed($page) {
+		$path = 'app/feed/'.$page.'.php';
+		include($path);
+	}
+
 ?>
