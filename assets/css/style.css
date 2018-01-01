@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css?family=Product+Sans:300,400,600,700');
+
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+	background-color: #222;
+	font-family: 'Product Sans';
+}
+
+.clickable {
+	cursor: pointer !important;
+	transition: all 0.1s;
+}
+
+.clickable:hover {
+	opacity: 0.6;
+	transition: all 0.1s;
+}
+
+.logo > h1 {
+	margin-top: 0px;
+	font-size: 35px;
+	width: 100px;
+}
+
+.logo > h1 > span {
+	color: #00E676;
+}
+
+.logo {
+	user-select: none;
+	position: fixed;
+	color: white;
+	width: 100%;
+	padding-top: 10px;
+	margin-left: 20px;
+	transition: all 0.2s;
+	height: 50px;
+	background-color: #222;
+	z-index: 99;
+	font-weight: 700;
+	font-size: 35px;
+}
+
+.bottom-link {
+	color: white;
+	opacity: 0.6;
+	font-weight: 400;
+	position: absolute;
+	bottom: 10px;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 13px;
+	right: 10px;
+	text-transform: uppercase;
+	transition: all 0.1s;
+}
+
+.bottom-link:hover {
+	opacity: 1;
+	transition: all 0.1s;
+}
+
+.terms-card {
+	width: 80%;
+	max-width: 800px;
+	height: auto;
+	border-radius: 2px;
+	background-color: white;
+	margin: 70px auto;
+	padding: 10px;
+}
+
+.terms-card > h2, h3, p, ol {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.terms-card > p > a {
+	color: #00E676;
+	text-decoration: none;
+}
+
+.hero {
+	width: 100%;
+	height: auto;
+	text-align: center;
+}
+
+.email-input {
+	-webkit-appearance: none;
+	max-width: 400px;
+	outline: none;
+	text-align: center;
+	font-family: 'Product Sans';
+	font-weight: 400;
+	border-radius: 40px;
+	font-size: 16px;
+	border: 2px solid lightgrey;
+	width: 80%;
+	height: 40px;
+	position: relative;
+	margin-top: 210px;
+	transition: all 0.1s;
+}
+
+@-webkit-keyframes autofill {
+    to {
+        color: black;
+        background: white;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
+.button-line {
+	width: 3px;
+	height: 30px;
+	background-color: lightgrey;
+	margin: 0 auto;
+	transition: all 0.1s;
+}
+
+.active-button {
+	cursor: pointer !important;
+	background-color: #00E676 !important;
+	transition: all 0.1s;
+}
+
+.button {
+	width: 55px;
+	height: 55px;
+	margin: 0 auto;
+	user-select: none;
+	cursor: not-allowed;
+	text-align: center;
+	color: white;
+	font-weight: 800;
+	font-size: 20px;
+	line-height: 55px;
+	border-radius: 55px;
+	background-color: lightgrey;
+	transition: all 0.1s;
+}
+
+.line-hide {
+	height: 0px;
+	transition: all 0.1s;
+}
+
+.text-mode {
+	user-select: none;
+	margin-top: 60px;
+	width: 100%;
+	background-color: transparent !important;
+	border: none;
+	color: white;
+	transition: all 0.15s;
+}
+
+.text-mode::selection { 
+   background: transparent; 
+}
+
+.button-hide {
+	transition: all 0.1s;
+	transform: scale(0);
+}
+
+.button:hover {
+	opacity: 0.7;
+	transition: all 0.1s;
+}
+
+.corner-loader {
+	position: fixed;
+	top: 17px;
+	display: none;
+	z-index: 100;
+	right: 17px;
+	height: 24px;
+	width: 24px;
+	background-size: 24px 24px;
+	background-image: url('../img/loader.svg');
+	transition: all 0.1s;
+}
+
+.corner-loader:hover {
+	transition: all 0.1s;
+	background-image: url('../img/close.svg');
+	cursor: pointer;
+	top: 14px;
+	right: 20px;
+	background-size: 30px 30px;
+}
+
+.stop-warning {
+	width: 100%;
+	height: 100%;
+	user-select: none;
+	position: fixed;
+	z-index: 9999;
+	pointer-events: none;
+	background-color: rgba(0,0,0,0.6);
+	display: none;
+}
+
+.stop-warning-box {
+	width: 80%;
+	max-width: 400px;
+	padding: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 2px;
+	display: none;
+}
+
+.stop-warning-title {
+	color: #333;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.stop-warning-sub {
+	color: #666;
+	margin-left: 10px;
+	margin-top: -5px;
+	font-size: 16px;
+	margin-right: 10px;
+	font-weight: 400;
+}
+
+.stop-buttons {
+	width: 100%;
+	overflow-x: hidden;
+	height: 50px;
+	margin-top: 30px;
+	border-top: 1px solid #00E676;
+}
+
+.stop-line {
+	width: 1px;
+	background-color: #00E676;
+	height: 50px;
+	bottom: 0;
+	left: 50%;
+	position: absolute;
+	margin: 0 auto;
+}
+
+.stop-button {
+	display: inline-block;
+	padding: 0;
+	pointer-events: auto !important;
+	text-align: center;
+	line-height: 50px;
+	height: 50px;
+	cursor: pointer;
+	color: #00E676;
+	text-transform: uppercase;
+	font-weight: 900;
+	width: 50%;
+	box-sizing: border-box;
+}
+
+.stop-button:hover {
+	background-color: #00E676 !important;
+	cursor: pointer;
+	color: white !important;
+}
+
+.error-title {
+	font-size: 140px;
+	color: white;
+	text-align: center;
+}
+
+.error-title > span {
+	color: #00E676;
+}
+
+.error-sub {
+	font-size: 30px;
+	font-weight: 400;
+	color: white;
+	margin-left: -20px;
+	opacity: 0.6;
+	margin-top: -110px;
+	text-align: center;
+}
+
+.home-button {
+	display:block;
+	width: 105px;
+	height: 30px;
+	line-height: 30px;
+	padding: 10px 50px 10px 50px;
+	border-radius: 30px;
+	background-color: white;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin: 20px auto;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #00E676;
+	transition: all 0.1s;
+}
+
+.home-button:hover {
+	color: white;
+	background-color: #00E676;
+	transition: all 0.1s;
+}
+
+.logo > span:hover {
+	animation: pulse 0.4s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}

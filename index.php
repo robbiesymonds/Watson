@@ -1,11 +1,15 @@
 <?php 
 
-	namespace Eliforp;
+	require 'app/vendor/Router.php';
+	$i = $_SERVER['REQUEST_URI'];
 
-	include 'app/vendor/Router.php';
-	$request = $_SERVER['REQUEST_URI'];
-	$url = new Router($request);
+	if (route($i) == '/') {
+		layout('search');
+	} elseif (route($i) == '/terms') {
+		layout('terms');
+	} else {
+		layout('errors/404');
+	}
 
-	$url->get('/', 'views/search.html');
 
  ?>

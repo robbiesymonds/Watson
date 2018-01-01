@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 	<html>
 	<head>
-		<title>Eliforp</title>
+		<title>Watson</title>
 		<meta charset=utf-8>
-		<meta name=description content="An open-source">
+		<meta name=description content="An open-source utility for finding digital footprints from a range of sources just using an email.">
 		<meta name=viewport content="width=device-width, initial-scale=1">
+		<link rel="icon" href="assets/img/favicon.png" type="image/png">
 		<link rel=stylesheet href="assets/css/style.css">
 	</head>
 	<body>
 
-		Hello There!
+		<div class="logo"><h1>Watson<span>.</span></h1></div>
+
+		<div class="corner-loader"></div>
+
+		<div class="stop-warning">
+			<div class="stop-warning-box">
+				<h1 class="stop-warning-title">Stop Watson?</h1>
+				<h2 class="stop-warning-sub">Are you sure you want to quit the process now? You will not be able to resume this session. You will need to restart entirely if you halt now.</h2>
+				<div class="stop-buttons">
+					<div class="stop-line"></div>
+					<div data-boolean="false" class="stop-button">Cancel</div><div data-boolean="true" class="stop-button">Stop</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="hero">
+			<input autocomplete="off" placeholder="Email" class="email-input" id="email" type="email">
+			<div class="button-line"></div>
+			<div class="button">Go</div>
+		</div>
+
+		<a class="bottom-link" href="/terms">Terms of Use</a>
 
 	</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="assets/js/script.js"></script>
 </html>
