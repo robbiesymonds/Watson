@@ -10,6 +10,32 @@ html, body {
 	font-family: 'Product Sans';
 }
 
+.card-info-title {
+	font-size: 17px;
+	margin-left: 20px;
+}
+
+
+.card-info-value {
+	font-size: 15px;
+	font-weight: 400;
+}
+
+
+.card-image-wrapper {
+	display: block; 
+	margin: 10px auto;
+	width: 64px; 
+	text-align: center;
+}
+
+.card-image {
+	width: 64px;
+	height: 64px;
+	border-radius: 100%;
+	text-align: center;
+}
+
 .cards {
 	width: 90%;
 	height: auto;
@@ -27,6 +53,48 @@ html, body {
 	color: #00E676;
 }
 
+.card-error-title {
+	font-weight: 700;
+	color: #333;
+	font-size: 21px;
+	text-align: center;
+	display: block;
+	margin-top: 40px;
+}
+
+.card-error-icon {
+	width: 64px;
+	height: 64px;
+	margin: 20px auto;
+	background-size: 64px 64px;
+	background-image: url('../img/error.svg');
+}
+
+.card-error-title > span {
+	color: #00E676;
+}
+
+.empty-title {
+	font-weight: 700;
+	color: #333;
+	font-size: 21px;
+	text-align: center;
+	display: block;
+	margin-top: 40px;
+}
+
+.empty-icon {
+	width: 64px;
+	height: 64px;
+	margin: 20px auto;
+	background-size: 64px 64px;
+	background-image: url('../img/empty.svg');
+}
+
+.empty-title > span {
+	color: #00E676;
+}
+
 .card-loader {
 	background-image: url('../img/loader.svg');
 	width: 48px;
@@ -37,8 +105,10 @@ html, body {
 
 .card {
 	background-color: white;
-	width: 250px;
+	width: 270px;
+	overflow: auto;
 	min-height: 200px;
+	height: auto;
 	transform: scale(0);
 	border-radius: 2px;
 	transition: all 0.2s;

@@ -11,6 +11,8 @@
 
 					if ($json) {
 						$data = unserialize($json);
+						$response = array('response' => 'SUCCESS');
+						$data = array_merge($response, $data);
 						$data = json_encode($data);
 						print_r($data);
 					} else {
