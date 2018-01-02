@@ -40,6 +40,18 @@ $(document).ready( function() {
 		}
 	});
 
+	$('body').on('click', '.card-list-item', function() {
+		if ($(this).hasClass('show-details')) {
+			$(this).toggleClass('show-details');
+			$(this).find('.list-expand').toggleClass('list-expanded');
+		} else {
+			$('.card-list-item').removeClass('show-details');
+			$('.list-expand').removeClass('list-expanded');
+			$(this).toggleClass('show-details');
+			$(this).find('.list-expand').toggleClass('list-expanded');
+		}
+	});
+
 	$('.button').on('click', function() {
 		if ($(this).hasClass('active-button')) {
 			if (isEmail($.trim($('#email').val()))) {

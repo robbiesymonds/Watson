@@ -66,8 +66,60 @@ class WatsonHandler {
 
 	// Scans
 
-	Pwn($email) {
-
+	Breaches($email) {
+		var email = $email;
+		Watson.createCard('breaches');
+		$.ajax({
+			url: 'feed/breaches',
+			type: 'POST',
+			data: {'email': $email, 'token': '31a20a479ca838f9e4a67cc834360714'},
+			success: function(data) {
+				data = JSON.parse(data);
+				switch (data.response) {
+					case 'SUCCESS':
+						Watson.stopLoading('breaches');
+						setTimeout(function() {
+							var html = '';
+							var html_start = '<div class="card-list">';
+							var html_end = '</div>';
+							$.each(data, function(i, item) {
+								if (i != 'response') {
+									var title = item.Title;
+									var date = item.BreachDate;
+									var description = item.Description;
+									var info = item.DataClasses;
+									var info_list = '';
+									$.each(info, function(i, item) {
+										info_list = info_list + ', ' + item;
+									});
+									info_list = info_list.substring(2);
+									html = html + '<div class="card-list-item"><h1 class="list-title">'+title+'</h1><div class="list-expand"></div><div class="list-details"><h2 class="list-detail-big">Description: <span>'+description+'</span></h2><h2 class="list-detail">Breach Date: <span>'+date+'</span></h2><h2 class="list-detail">Leaked Data: <span>'+info_list+'</span></h2></div></div>';
+								}
+							});
+							$('#breaches').append(html_start + html + html_end);
+						}, 210);
+						break;
+					case 'NO_RESPONSE':
+						Watson.cardEmpty('breaches');
+						break;
+					case 'INVALID_EMAIL':
+						alert('Error: The email you entered was not a valid email');
+						Watson.cardError('breaches');
+						break;
+					case 'NO_EMAIL':
+						alert('Error: No email was supplied to the server, please reload and try again.');
+						Watson.cardError('breaches');
+						break;
+					case 'INVALID_OR_NO_TOKEN':
+						alert('Error: No token was supplied to the server, please reload and try again.');
+						Watson.cardError('breaches');
+						break;
+					default: 
+						alert('A major issue occurred, please reload the page and try again.');
+						Watson.cardError('breaches');
+				} 
+			}
+		});
 	}
 
 	Gravatar($email) {
@@ -96,12 +148,12 @@ class WatsonHandler {
 						Watson.addInfo('gravatar', 'Display Name', display_name);
 						Watson.addInfo('gravatar', 'Name', name);
 						Watson.addInfo('gravatar', 'About', about);
-						Watson.Pwn(email);
+						Watson.Breaches(email);
 						}, 210);
 						break;
 					case 'NO_RESPONSE':
 						Watson.cardEmpty('gravatar');
-						Watson.Pwn(email);
+						Watson.Breaches(email);
 						break;
 					case 'INVALID_EMAIL':
 						alert('Error: The email you entered was not a valid email');
