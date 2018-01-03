@@ -397,6 +397,7 @@ html, body {
 	opacity: 0.6;
 	font-weight: 400;
 	position: absolute;
+	text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 	bottom: 10px;
 	cursor: pointer;
 	text-decoration: none;
@@ -685,5 +686,16 @@ input:-webkit-autofill {
 
 	100% {
 		opacity: 1;
+	}
+}
+
+@media only screen and (max-width: 635px) {
+	.card {
+		text-align: left;
+		margin: 8px auto;
+	}
+
+	.cards {
+		text-align: center;
 	}
 }

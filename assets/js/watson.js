@@ -28,7 +28,7 @@ class WatsonHandler {
 				$('#'+$id).prepend(html);
 				break;
 			case 'external':
-				var html = '<div class="status-bubble external"></div><div class="card-status"><div class="status-tip">Watson cannot display the results as Facebook prevents data from being shown<span>.</span></div></div>';
+				var html = '<div class="status-bubble external"></div><div class="card-status"><div class="status-tip">Watson cannot display the results as this website prevents data from being shown<span>.</span></div></div>';
 				$('#'+$id).prepend(html);
 				break;
 			case 'guess':
@@ -251,13 +251,13 @@ class WatsonHandler {
 							$('#twitter').append(html_start + html + html_end);
 						}, 210);
 						if (Watson.Ready()) {
-							Watson.Instagram(email);
+							Watson.LinkedIn(email);
 						}
 						break;
 					case 'NO_RESPONSE':
 						Watson.cardEmpty('twitter');
 						if (Watson.Ready()) {
-							Watson.Instagram(email);
+							Watson.LinkedIn(email);
 						}
 						break;
 					case 'INVALID_EMAIL':
@@ -280,8 +280,20 @@ class WatsonHandler {
 		});
 	}
 
-	Instagram($email) {
-
+	LinkedIn($email) {
+		var email = $email;
+		var email_part = email.split('@')[0];
+		Watson.createCard('linkedin');
+		var link = 'https://www.linkedin.com/search/results/index/?keywords='+email_part+'&origin=GLOBAL_SEARCH_HEADER';
+		setTimeout(function() {
+			Watson.stopLoading('linkedin');
+			setTimeout(function() {
+				Watson.External('linkedin', link);
+				if (Watson.Ready()) {
+					// Watson.Twitter(email);
+				}
+			}, 220);
+		}, 500);
 	}
 
 }
