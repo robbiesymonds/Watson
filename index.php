@@ -16,6 +16,9 @@
 		case '/feed/breaches':
 			feed('breaches');
 			break;
+		case '/feed/twitter':
+			feed('twitter');
+			break;
 		default:
 		layout('errors/404');
 	}

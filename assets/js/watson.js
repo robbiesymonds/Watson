@@ -31,6 +31,10 @@ class WatsonHandler {
 				var html = '<div class="status-bubble external"></div><div class="card-status"><div class="status-tip">Watson cannot display the results as Facebook prevents data from being shown<span>.</span></div></div>';
 				$('#'+$id).prepend(html);
 				break;
+			case 'guess':
+				var html = '<div class="status-bubble guess"></div><div class="card-status"><div class="status-tip">Watson has tried to guess the accounts linked to the email you searched<span>.</span></div></div>';
+				$('#'+$id).prepend(html);
+				break;
 		}
 	}
 
@@ -214,8 +218,70 @@ class WatsonHandler {
 			Watson.stopLoading('facebook');
 			setTimeout(function() {
 				Watson.External('facebook', link);
+				if (Watson.Ready()) {
+					Watson.Twitter(email);
+				}
 			}, 220);
 		}, 500);
+	}
+
+	Twitter($email) {
+		var email = $email;
+		Watson.createCard('twitter');
+		$.ajax({
+			url: 'feed/twitter',
+			type: 'POST',
+			data: {'email': $email, 'token': '31a20a479ca838f9e4a67cc834360714'},
+			success: function(data) {
+				data = JSON.parse(data);
+				console.log(data);
+				switch (data.response) {
+					case 'SUCCESS':
+						Watson.stopLoading('twitter');
+						Watson.Status('twitter', 'guess');
+						var html_start = '<div class="card-list">';
+						var html_end = '</div>';
+						var html = '';
+						$.each(data, function(i, item) {
+							if (i != 'response') {
+								html = html + '<div class="list-link-item"><img src="'+item.image+'" class="list-link-profile"><h2 class="list-link-title">@'+item.username+'</h2><a target="_blank" href="https://twitter.com/'+item.username+'"><div class="list-link-icon"></div></a></div>';
+							}
+						});
+						setTimeout(function() {
+							$('#twitter').append(html_start + html + html_end);
+						}, 210);
+						if (Watson.Ready()) {
+							Watson.Instagram(email);
+						}
+						break;
+					case 'NO_RESPONSE':
+						Watson.cardEmpty('twitter');
+						if (Watson.Ready()) {
+							Watson.Instagram(email);
+						}
+						break;
+					case 'INVALID_EMAIL':
+						alert('Error: The email you entered was not a valid email');
+						Watson.cardError('twitter');
+						break;
+					case 'NO_EMAIL':
+						alert('Error: No email was supplied to the server, please reload and try again.');
+						Watson.cardError('twitter');
+						break;
+					case 'INVALID_OR_NO_TOKEN':
+						alert('Error: No token was supplied to the server, please reload and try again.');
+						Watson.cardError('twitter');
+						break;
+					default: 
+						alert('A major issue occurred, please reload the page and try again.');
+						Watson.cardError('twitter');
+				} 
+			}
+		});
+	}
+
+	Instagram($email) {
+
 	}
 
 }

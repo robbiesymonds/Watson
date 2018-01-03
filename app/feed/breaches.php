@@ -32,18 +32,6 @@
 						echo $json;
 					}
 
-					// if (get_http_response_code($json)) {
-					// 	$data = unserialize($json);
-					// 	$response = array('response' => 'SUCCESS');
-					// 	$data = array_merge($response, $data);
-					// 	$data = json_encode($data);
-					// 	print_r($data);
-					// } else {
-					// 	$array = array('response'=>'NO_RESPONSE');
-					// 	$json = json_encode($array);
-					// 	echo $json;
-					// }
-
 				} else {
 					$error = array('response' => 'INVALID_EMAIL');
 					echo json_encode($error);
