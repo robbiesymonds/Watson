@@ -1,9 +1,3 @@
-// function WatsonStart() {
-
-// 	Watson->gravatar()
-
-// }
-
 class WatsonHandler {
 
 	// Core Functions
@@ -27,14 +21,29 @@ class WatsonHandler {
 		}
 	}
 
+	Status($id, $type) {
+		switch ($type) {
+			case 'good':
+				var html = '<div class="status-bubble good"></div><div class="card-status"><div class="status-tip">No issues occurred<span>.</span></div></div>';
+				$('#'+$id).prepend(html);
+				break;
+			case 'external':
+				var html = '<div class="status-bubble external"></div><div class="card-status"><div class="status-tip">Watson cannot display the results as Facebook prevents data from being shown<span>.</span></div></div>';
+				$('#'+$id).prepend(html);
+				break;
+		}
+	}
+
 	createCard($name) {
-		var id = $name;
-		var name = $name.charAt(0).toUpperCase() + $name.slice(1);
-		var html = '<div id="'+id+'" class="card"><div class="card-title">'+name+'<span>.</span></div><div class="card-loader"></div></div>';
-		$('.cards').append(html);
-		setTimeout(function() {
-			$('#'+id).addClass('card-shown');
-		}, 100);
+		if (Watson.Ready()) {
+			var id = $name;
+			var name = $name.charAt(0).toUpperCase() + $name.slice(1);
+			var html = '<div id="'+id+'" class="card"><div class="card-title">'+name+'<span>.</span></div><div class="card-loader"></div></div>';
+			$('.cards').append(html);
+			setTimeout(function() {
+				$('#'+id).addClass('card-shown');
+			}, 100);
+		}
 	}
 
 	stopLoading($id) {
@@ -64,6 +73,12 @@ class WatsonHandler {
 		}
 	}
 
+	External($id, $link) {
+		Watson.Status($id, 'external');
+		var html = '<div class="external-text">Possible results<span>.</span></div><a target="_blank" href="'+$link+'" class="external-button">Click here</a>';
+		$('#'+$id).append(html);
+	}
+
 	// Scans
 
 	Breaches($email) {
@@ -78,6 +93,7 @@ class WatsonHandler {
 				switch (data.response) {
 					case 'SUCCESS':
 						Watson.stopLoading('breaches');
+						Watson.Status('breaches', 'good');
 						setTimeout(function() {
 							var html = '';
 							var html_start = '<div class="card-list">';
@@ -97,10 +113,16 @@ class WatsonHandler {
 								}
 							});
 							$('#breaches').append(html_start + html + html_end);
+							if (Watson.Ready()) {
+								Watson.Facebook(email);
+							}
 						}, 210);
 						break;
 					case 'NO_RESPONSE':
 						Watson.cardEmpty('breaches');
+						if (Watson.Ready()) {
+							Watson.Facebook(email);
+						}
 						break;
 					case 'INVALID_EMAIL':
 						alert('Error: The email you entered was not a valid email');
@@ -139,21 +161,29 @@ class WatsonHandler {
 						var username = data.preferredUsername;
 						var display_name = data.displayName;
 						var image = data.thumbnailUrl;
-						var name = data.name.formatted;
+						if (data.name) {
+							var name = data.name.formatted;
+						}
+						var name = undefined;
 						var about = data.aboutMe;
 						Watson.stopLoading('gravatar');
+						Watson.Status('gravatar', 'good');
 						setTimeout(function() {
 						Watson.addImage('gravatar', image, profile);
 						Watson.addInfo('gravatar', 'Username', username);
 						Watson.addInfo('gravatar', 'Display Name', display_name);
 						Watson.addInfo('gravatar', 'Name', name);
 						Watson.addInfo('gravatar', 'About', about);
-						Watson.Breaches(email);
+						if (Watson.Ready()) {
+							Watson.Breaches(email);
+						}
 						}, 210);
 						break;
 					case 'NO_RESPONSE':
 						Watson.cardEmpty('gravatar');
-						Watson.Breaches(email);
+						if (Watson.Ready()) {
+							Watson.Breaches(email);
+						}
 						break;
 					case 'INVALID_EMAIL':
 						alert('Error: The email you entered was not a valid email');
@@ -176,9 +206,16 @@ class WatsonHandler {
 		});
 	}
 
-}
+	Facebook($email) {
+		var email = $email;
+		Watson.createCard('facebook');
+		var link = 'https://www.facebook.com/search/results.php?q='+email;
+		setTimeout(function() {
+			Watson.stopLoading('facebook');
+			setTimeout(function() {
+				Watson.External('facebook', link);
+			}, 220);
+		}, 500);
+	}
 
-// Gravatar
-// Facebook
-// HIBP
-// Twitter
+}
