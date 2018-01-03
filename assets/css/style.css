@@ -116,6 +116,7 @@ html, body {
 
 .status-bubble:hover + .card-status { 
 	visibility: visible;
+	overflow: hidden !important;
 	transition: visibility 0s, opacity 0.1s linear;
  	opacity: 1;
 }
@@ -545,6 +546,14 @@ input:-webkit-autofill {
 	top: 14px;
 	right: 20px;
 	background-size: 30px 30px;
+}
+
+.complete:hover {
+	background-image: url('../img/complete.svg') !important;
+	background-size: 24px 24px !important;
+	top: 17px !important;
+	cursor: default;
+	right: 17px !important;
 }
 
 .stop-warning {

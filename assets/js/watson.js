@@ -84,6 +84,12 @@ class WatsonHandler {
 		$('#'+$id).append(html);
 	}
 
+	Finished() {
+		Watson.Kill();
+		$('.corner-loader').addClass('complete');
+		$('.corner-loader').css('background-image', 'url("assets/img/complete.svg")');
+	}
+
 	// Scans
 
 	Breaches($email) {
@@ -157,7 +163,6 @@ class WatsonHandler {
 			type: 'POST',
 			data: {'email': $email, 'token': '31a20a479ca838f9e4a67cc834360714'},
 			success: function(data) {
-				console.log(data);
 				data = JSON.parse(data);
 				switch (data.response) {
 					case 'SUCCESS':
@@ -168,8 +173,9 @@ class WatsonHandler {
 						var image = data.thumbnailUrl;
 						if (data.name) {
 							var name = data.name.formatted;
+						} else {
+							var name = undefined;
 						}
-						var name = undefined;
 						var about = data.aboutMe;
 						Watson.stopLoading('gravatar');
 						Watson.Status('gravatar', 'good');
@@ -235,7 +241,6 @@ class WatsonHandler {
 			data: {'email': $email, 'token': '31a20a479ca838f9e4a67cc834360714'},
 			success: function(data) {
 				data = JSON.parse(data);
-				console.log(data);
 				switch (data.response) {
 					case 'SUCCESS':
 						Watson.stopLoading('twitter');
@@ -306,7 +311,6 @@ class WatsonHandler {
 			data: {'email': $email, 'token': '31a20a479ca838f9e4a67cc834360714'},
 			success: function(data) {
 				data = JSON.parse(data);
-				console.log(data);
 				switch (data.response) {
 					case 'SUCCESS':
 						Watson.stopLoading('instagram');
@@ -323,13 +327,13 @@ class WatsonHandler {
 							$('#instagram').append(html_start + html + html_end);
 						}, 210);
 						if (Watson.Ready()) {
-							// Watson.LinkedIn(email);
+							Watson.Flickr(email);
 						}
 						break;
 					case 'NO_RESPONSE':
 						Watson.cardEmpty('instagram');
 						if (Watson.Ready()) {
-							// Watson.LinkedIn(email);
+							Watson.Flickr(email);
 						}
 						break;
 					case 'INVALID_EMAIL':
@@ -347,6 +351,58 @@ class WatsonHandler {
 					default: 
 						alert('A major issue occurred, please reload the page and try again.');
 						Watson.cardError('instagram');
+				} 
+			}
+		});
+	}
+
+	Flickr($email) {
+		var email = $email;
+		Watson.createCard('flickr');
+		$.ajax({
+			url: 'feed/flickr',
+			type: 'POST',
+			data: {'email': $email, 'token': '31a20a479ca838f9e4a67cc834360714'},
+			success: function(data) {
+				data = JSON.parse(data);
+				switch (data.response) {
+					case 'SUCCESS':
+						var photos = data.photos;
+						var username = data.username;
+						var profile = data.profile;
+						var image = data.image;
+						Watson.stopLoading('flickr');
+						Watson.Status('flickr', 'good');
+						setTimeout(function() {
+						Watson.addImage('flickr', image, profile);
+						Watson.addInfo('flickr', 'Username', username);
+						Watson.addInfo('flickr', 'Photos', photos);
+						if (Watson.Ready()) {
+							Watson.Finished();
+						}
+						}, 210);
+						break;
+					case 'NO_RESPONSE':
+						Watson.cardEmpty('flickr');
+						if (Watson.Ready()) {
+							Watson.Finished();
+						}
+						break;
+					case 'INVALID_EMAIL':
+						alert('Error: The email you entered was not a valid email');
+						Watson.cardError('flickr');
+						break;
+					case 'NO_EMAIL':
+						alert('Error: No email was supplied to the server, please reload and try again.');
+						Watson.cardError('flickr');
+						break;
+					case 'INVALID_OR_NO_TOKEN':
+						alert('Error: No token was supplied to the server, please reload and try again.');
+						Watson.cardError('flickr');
+						break;
+					default: 
+						alert('A major issue occurred, please reload the page and try again.');
+						Watson.cardError('flickr');
 				} 
 			}
 		});

@@ -22,6 +22,9 @@
 		case '/feed/instagram':
 			feed('instagram');
 			break;
+		case '/feed/flickr':
+			feed('flickr');
+			break;
 		default:
 		layout('errors/404');
 	}

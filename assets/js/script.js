@@ -76,8 +76,10 @@ $(document).ready( function() {
 	});
 
 	$('.corner-loader').click(function() {
-		$('.stop-warning').fadeIn(100);
-		$('.stop-warning-box').slideDown(100);
+		if (!$(this).hasClass('complete')) {
+			$('.stop-warning').fadeIn(100);
+			$('.stop-warning-box').slideDown(100);
+		}
 	});
 
 	$('.stop-button').click(function() {
