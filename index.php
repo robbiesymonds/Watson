@@ -19,8 +19,8 @@
 		case '/feed/twitter':
 			feed('twitter');
 			break;
-		case '/feed/linkedin':
-			feed('linkedin');
+		case '/feed/instagram':
+			feed('instagram');
 			break;
 		default:
 		layout('errors/404');

@@ -55,7 +55,8 @@ class WatsonHandler {
 	}
 
 	cardError($id) {
-		var html = '<h1 class="card-error-title">Gravatar<span>.</span></h1><div class="card-error-icon"></div>';
+		var name = $id.charAt(0).toUpperCase() + $id.slice(1);
+		var html = '<h1 class="card-error-title">'+name+'<span>.</span></h1><div class="card-error-icon"></div>';
 		$('#'+$id).html(html);
 	}
 
@@ -290,10 +291,65 @@ class WatsonHandler {
 			setTimeout(function() {
 				Watson.External('linkedin', link);
 				if (Watson.Ready()) {
-					// Watson.Twitter(email);
+					Watson.Instagram(email);
 				}
 			}, 220);
 		}, 500);
+	}
+
+	Instagram($email) {
+		var email = $email;
+		Watson.createCard('instagram');
+		$.ajax({
+			url: 'feed/instagram',
+			type: 'POST',
+			data: {'email': $email, 'token': '31a20a479ca838f9e4a67cc834360714'},
+			success: function(data) {
+				data = JSON.parse(data);
+				console.log(data);
+				switch (data.response) {
+					case 'SUCCESS':
+						Watson.stopLoading('instagram');
+						Watson.Status('instagram', 'guess');
+						var html_start = '<div class="card-list">';
+						var html_end = '</div>';
+						var html = '';
+						$.each(data, function(i, item) {
+							if (i != 'response') {
+								html = html + '<div class="list-link-item"><img src="'+data[i].image+'" class="list-link-profile"><h2 class="list-link-title">@'+data[i].username+'</h2><a target="_blank" href="https://instagram.com/'+item.username+'"><div class="list-link-icon"></div></a></div>';
+							}
+						});
+						setTimeout(function() {
+							$('#instagram').append(html_start + html + html_end);
+						}, 210);
+						if (Watson.Ready()) {
+							// Watson.LinkedIn(email);
+						}
+						break;
+					case 'NO_RESPONSE':
+						Watson.cardEmpty('instagram');
+						if (Watson.Ready()) {
+							// Watson.LinkedIn(email);
+						}
+						break;
+					case 'INVALID_EMAIL':
+						alert('Error: The email you entered was not a valid email');
+						Watson.cardError('instagram');
+						break;
+					case 'NO_EMAIL':
+						alert('Error: No email was supplied to the server, please reload and try again.');
+						Watson.cardError('instagram');
+						break;
+					case 'INVALID_OR_NO_TOKEN':
+						alert('Error: No token was supplied to the server, please reload and try again.');
+						Watson.cardError('instagram');
+						break;
+					default: 
+						alert('A major issue occurred, please reload the page and try again.');
+						Watson.cardError('instagram');
+				} 
+			}
+		});
 	}
 
 }

@@ -342,11 +342,10 @@ html, body {
 	background-color: white;
 	width: 270px;
 	overflow: auto;
-	min-height: 200px;
+	height: 220px;
 	vertical-align: top;
 	display: inline-block;
 	margin: 8px;
-	height: auto;
 	transform: scale(0);
 	border-radius: 2px;
 	transition: all 0.2s;
