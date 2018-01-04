@@ -1,4 +1,4 @@
 # Watson
 
-An open-source utility for finding digital footprints from a range of sources just using an email.
+An open-source utility for finding the digital footprints of anyone using a range of online sources from their email address.
 
